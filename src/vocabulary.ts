@@ -95,6 +95,11 @@ export const itemPrefixes = [
 	'太古の',
 	'WiFi対応',
 	'高反発',
+	'S/Nの悪い',
+	'DCオフセットがデカすぎる',
+	'おもらし癖のある',
+	'オープンソースの',
+	'プロプライエタリの',
 ];
 
 export const items = [
@@ -261,6 +266,14 @@ export const items = [
 	'ゼロ幅スペース',
 	'全角スペース',
 	'太鼓',
+	'オーディオインターフェース',
+	'マイクプリ',
+	'iLok',
+	'eLicenser',
+	'ラウドネスメーター',
+	'苔',
+	'VSTプラグイン',
+	'AAXプラグイン',
 ];
 
 export const and = [
@@ -274,6 +287,7 @@ export const and = [
 	'を侍らせた',
 	'が上に乗った',
 	'のそばにある',
+	'を曲げ伸ばした',
 ];
 
 export function genItem(seedOrRng?: (() => number) | string | number) {
