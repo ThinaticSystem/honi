@@ -56,9 +56,9 @@ export default class extends Module {
 			let reaction = emojis[0];
 
 			switch (reaction) {
-				case '✊': return react('✌', true);
+				case '✊': case '👊': return react('✌', true);
 				case '✌': return react('✋', true);
-				case '🖐': case '✋': return react('👊', true);
+				case '🖐': case '✋': return react('✊', true);
 			}
 
 			return react(reaction);
