@@ -68,6 +68,6 @@ export default class extends Module {
 		if (includes(note.text, ['ぷりん'])) return react('🍮');
 		if (includes(note.text, ['寿司', 'sushi']) || note.text === 'すし') return react('🍣');
 
-		if (includes(note.text, ['藍'])) return react('🙌');
+		if (includes(note.text, ['ほに'])) return react(':honi:');
 	}
 }
