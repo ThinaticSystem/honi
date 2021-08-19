@@ -6,6 +6,7 @@ import { Note } from '@/misskey/note';
 import Module from '@/module';
 import Stream from '@/stream';
 import includes from '@/utils/includes';
+const gomamayo = require('gomamayo-js');
 
 export default class extends Module {
 	public readonly name = 'emoji-react';
@@ -70,5 +71,7 @@ export default class extends Module {
 
 		if (includes(note.text, ['ほに', 'ホニ']) || note.text === 'ﾎﾆ') return react(':honi:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
+
+		if (await gomamayo.find(note.text)) return react(':gomamayo:');
 	}
 }
