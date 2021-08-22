@@ -71,6 +71,7 @@ export default class extends Module {
 
 		if (includes(note.text, ['ほに', 'ホニ']) || note.text === 'ﾎﾆ') return react(':honi:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
+		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 
 		if (await gomamayo.find(note.text)) return react(':gomamayo:');
 	}
