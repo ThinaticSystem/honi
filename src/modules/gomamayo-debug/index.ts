@@ -17,9 +17,17 @@ export default class extends Module {
 	private async mentionHook(msg: Message) {
 		if (msg.text && msg.text.includes('ゴママヨ')) {
 			const gomamayoResult = await gomamayo.find(msg.text.replace(/ゴママヨ/g, ''));
+			let resBodyText, resCwText;
+			if (gomamayoResult) {
+				resCwText = 'ゴママヨかも';
+				resBodyText = JSON.stringify(gomamayoResult, undefined, 2);
+			} else {
+				resBodyText = 'ゴママヨじゃないかも';
+			}
 			const resText = gomamayoResult ? `ゴママヨかも\n${JSON.stringify(gomamayoResult, undefined, 2)}` : 'ゴママヨじゃないかも';
-			msg.reply(resText, {
-				immediate: true
+			msg.reply(resBodyText, {
+				immediate: true,
+				cw: resCwText
 			});
 			return true;
 		} else {
