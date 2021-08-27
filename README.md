@@ -6,15 +6,17 @@ Misskey用の日本語Botです。
 
 ## これほに
 ### 概要
-syuilo/aiフォークです。
+syuilo/aiフォークです。  
 無理のない改造がほんの少し加わえられています。
 ### 機能リスト
 * ゴママヨ検知
+* 多すぎるカタカナ検知（「メイドデリバリーサービス」など）
 * じゃんけんに敗北
 * 語彙の改変
 ### 依存カスタム絵文字
 * :honi:
 * :gomamayo:
+* :too_many_katakana:
 * :kanneiyahataseitetsusyo:
 
 ## インストール
