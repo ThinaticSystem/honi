@@ -78,7 +78,7 @@ export default class extends Module {
 		// 「カタカナが多すぎる」 todo:そのうち半角カナも
 		let kataCount = 0;
 		for (let i = 0; i < note.text.length; i++) {
-			if ((note.text[i].charCodeAt(0) >= 12449 && note.text[i].charCodeAt(0) <= 12538) || note.text[i].charCodeAt(0) === 12540) {
+			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || note.text.charCodeAt(i) === 12540) {
 				kataCount++;
 				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
