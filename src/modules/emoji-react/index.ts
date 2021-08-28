@@ -83,6 +83,7 @@ export default class extends Module {
 				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
 				}
+			} else if (note.text.charCodeAt(i) === 12539) { // ・はノーカウント
 			} else {
 				kataCount = 0;
 			}
