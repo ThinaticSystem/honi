@@ -78,12 +78,12 @@ export default class extends Module {
 		// 「カタカナが多すぎる」 todo:そのうち半角カナも
 		let kataCount = 0;
 		for (let i = 0; i < note.text.length; i++) {
-			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || ((kataCount === 0) ? false : note.text.charCodeAt(i) === 12540)) {
+			if (note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) {
 				kataCount++;
 				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
 				}
-			} else if (note.text.charCodeAt(i) === 12539) { // ・はノーカウント
+			} else if ((note.text.charCodeAt(i) === 12539) || ((kataCount === 0) ? false : note.text.charCodeAt(i) === 12540)) { // "・", "ー"はノーカウント
 			} else {
 				kataCount = 0;
 			}
