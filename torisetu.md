@@ -1,4 +1,4 @@
-<img src="https://github.com/syuilo/ai/blob/master/ai.png?raw=true" align="right" height="320px"/>
+<img src="https://github.com/ThinaticSystem/honi/blob/master/honi.png?raw=true" align="right" height="320px"/>
 
 # 取扱説明書
 
