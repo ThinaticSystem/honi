@@ -300,7 +300,7 @@ export default class extends Module {
 
 	@autobind
 	private ponkotu(msg: Message): boolean | HandlerResult {
-		if (!msg.includes(['ぽんこつ'])) return false;
+		if (!msg.includes(['ぽんこつ', 'ハイレゾ'])) return false;
 
 		msg.friend.decLove();
 
