@@ -328,6 +328,8 @@ export default {
 	timer: {
 		set: 'りょうかい',
 
+		setZerozaki: 'りょうかい\nいつものね',
+
 		invalid: 'ん、ん～？？？',
 
 		tooLong: 'こっちも忘れちゃうよ…',
