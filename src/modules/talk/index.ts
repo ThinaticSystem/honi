@@ -340,8 +340,6 @@ export default class extends Module {
 			msg.reply(getSerif(serifs.core.search(match[1])));
 		}
 
-		msg.reply(getSerif(serifs.core.erait.general(msg.friend.name)));
-
 		return true;
 	}
 }
