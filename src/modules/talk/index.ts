@@ -33,7 +33,8 @@ export default class extends Module {
 			this.ote(msg) ||
 			this.ponkotu(msg) ||
 			this.rmrf(msg) ||
-			this.shutdown(msg)
+			this.shutdown(msg) ||
+			this.search(msg)
 		);
 	}
 
@@ -97,8 +98,8 @@ export default class extends Module {
 		if (msg.includes(['ただいま'])) {
 			msg.reply(
 				msg.friend.love >= 15 ? serifs.core.okaeri.love2(msg.friend.name) :
-				msg.friend.love >= 7 ? getSerif(serifs.core.okaeri.love(msg.friend.name)) :
-				serifs.core.okaeri.normal(msg.friend.name));
+					msg.friend.love >= 7 ? getSerif(serifs.core.okaeri.love(msg.friend.name)) :
+						serifs.core.okaeri.normal(msg.friend.name));
 			incLove();
 			return true;
 		}
@@ -166,12 +167,12 @@ export default class extends Module {
 
 		msg.reply(getSerif(
 			msg.friend.love >= 10 ? serifs.core.nadenade.love3 :
-			msg.friend.love >= 5 ? serifs.core.nadenade.love2 :
-			msg.friend.love <= -15 ? serifs.core.nadenade.hate4 :
-			msg.friend.love <= -10 ? serifs.core.nadenade.hate3 :
-			msg.friend.love <= -5 ? serifs.core.nadenade.hate2 :
-			msg.friend.love <= -1 ? serifs.core.nadenade.hate1 :
-			serifs.core.nadenade.normal
+				msg.friend.love >= 5 ? serifs.core.nadenade.love2 :
+					msg.friend.love <= -15 ? serifs.core.nadenade.hate4 :
+						msg.friend.love <= -10 ? serifs.core.nadenade.hate3 :
+							msg.friend.love <= -5 ? serifs.core.nadenade.hate2 :
+								msg.friend.love <= -1 ? serifs.core.nadenade.hate1 :
+									serifs.core.nadenade.normal
 		));
 
 		return true;
@@ -186,8 +187,8 @@ export default class extends Module {
 
 		msg.reply(getSerif(
 			msg.friend.love >= 5 ? serifs.core.kawaii.love :
-			msg.friend.love <= -3 ? serifs.core.kawaii.hate :
-			serifs.core.kawaii.normal));
+				msg.friend.love <= -3 ? serifs.core.kawaii.hate :
+					serifs.core.kawaii.normal));
 
 		return true;
 	}
@@ -201,8 +202,8 @@ export default class extends Module {
 
 		msg.reply(
 			msg.friend.love >= 5 ? (msg.friend.name ? serifs.core.suki.love(msg.friend.name) : serifs.core.suki.normal) :
-			msg.friend.love <= -3 ? serifs.core.suki.hate :
-			serifs.core.suki.normal);
+				msg.friend.love <= -3 ? serifs.core.suki.hate :
+					serifs.core.suki.normal);
 
 		return true;
 	}
@@ -235,8 +236,8 @@ export default class extends Module {
 
 		msg.reply(
 			msg.friend.love >= 5 ? serifs.core.hug.love :
-			msg.friend.love <= -3 ? serifs.core.hug.hate :
-			serifs.core.hug.normal);
+				msg.friend.love <= -3 ? serifs.core.hug.hate :
+					serifs.core.hug.normal);
 
 		return true;
 	}
@@ -250,8 +251,8 @@ export default class extends Module {
 
 		msg.reply(
 			msg.friend.love >= 5 ? serifs.core.humu.love :
-			msg.friend.love <= -3 ? serifs.core.humu.hate :
-			serifs.core.humu.normal);
+				msg.friend.love <= -3 ? serifs.core.humu.hate :
+					serifs.core.humu.normal);
 
 		return true;
 	}
@@ -265,8 +266,8 @@ export default class extends Module {
 
 		msg.reply(
 			msg.friend.love >= 5 ? serifs.core.batou.love :
-			msg.friend.love <= -5 ? serifs.core.batou.hate :
-			serifs.core.batou.normal);
+				msg.friend.love <= -5 ? serifs.core.batou.hate :
+					serifs.core.batou.normal);
 
 		return true;
 	}
@@ -292,8 +293,8 @@ export default class extends Module {
 
 		msg.reply(
 			msg.friend.love >= 10 ? serifs.core.ote.love2 :
-			msg.friend.love >= 5 ? serifs.core.ote.love1 :
-			serifs.core.ote.normal);
+				msg.friend.love >= 5 ? serifs.core.ote.love1 :
+					serifs.core.ote.normal);
 
 		return true;
 	}
@@ -329,5 +330,18 @@ export default class extends Module {
 		return {
 			reaction: 'confused'
 		};
+	}
+
+	@autobind
+	private search(msg: Message): boolean | HandlerResult {
+		if (!msg.includes(['って何', 'ってなに'])) return false;
+		const match = msg.extractedText.match(/(.+?)って(何|なに)/);
+		if (match) {
+			msg.reply(getSerif(serifs.core.search(match[1])));
+		}
+
+		msg.reply(getSerif(serifs.core.erait.general(msg.friend.name)));
+
+		return true;
 	}
 }

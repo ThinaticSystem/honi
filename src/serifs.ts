@@ -146,6 +146,8 @@ export default {
 
 		shutdown: 'ほにはまだ眠くないけど…？',
 
+		search: query => `自分で調べろ\n${query} 検索`,
+
 		transferNeedDm: 'わかった、それはチャットで話さない？',
 
 		transferCode: code => `領海侵犯。\n合言葉は「${code}」です！`,
