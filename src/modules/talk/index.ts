@@ -334,8 +334,8 @@ export default class extends Module {
 
 	@autobind
 	private search(msg: Message): boolean | HandlerResult {
-		if (!msg.includes(['って何', 'ってなに'])) return false;
-		const match = msg.extractedText.match(/(.+?)って(何|なに)/);
+		if (!msg.includes(['って何', 'ってなに', 'ってにゃに'])) return false;
+		const match = msg.extractedText.match(/(.+?)って(何|なに|にゃに)/);
 		if (match) {
 			msg.reply(getSerif(serifs.core.search(match[1])));
 		}
