@@ -41,7 +41,7 @@ export default class extends Module {
 		if (customEmojis) {
 			// カスタム絵文字が複数種類ある場合はキャンセル
 			if (!customEmojis.every((val, i, arr) => val === arr[0])) return;
-
+			if(customEmojis[0] == ':moresou:') return react(':yattare:',true);
 			this.log(`Custom emoji detected - ${customEmojis[0]}`);
 
 			return react(customEmojis[0]);
@@ -73,6 +73,8 @@ export default class extends Module {
 		if (includes(note.text, ['ほに', 'honi'])) return react(':honi:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
 		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
+		if (includes(note.text, ['漏れそう','もれそう'])) return react(':yattare:');
+		
 
 		if (await gomamayo.find(note.text)) return react(':gomamayo:');
 
