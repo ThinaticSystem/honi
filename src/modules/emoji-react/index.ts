@@ -81,7 +81,7 @@ export default class extends Module {
 		// 「カタカナが多すぎる」
 		let kataCount = 0;
 		for (let i = 0; i < note.text.length; i++) {
-			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || (note.text.charCodeAt(i) >= 65382 && note.text.charCodeAt(i) <= 65437 && note.text.charCodeAt(i) != 65392)) {
+			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || (note.text.charCodeAt(i) >= 65382 && note.text.charCodeAt(i) <= 65439 && note.text.charCodeAt(i) != 65392)) {
 				kataCount++;
 				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
