@@ -83,7 +83,7 @@ export default class extends Module {
 		for (let i = 0; i < note.text.length; i++) {
 			if (note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) {
 				kataCount++;
-				if (kataCount >= note.text.length*2/3) {
+				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
 				}
 			} else if ((note.text.charCodeAt(i) === 12539) || ((kataCount === 0) ? false : note.text.charCodeAt(i) === 12540)) { // "・", "ー"はノーカウント
