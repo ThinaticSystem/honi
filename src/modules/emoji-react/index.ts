@@ -81,12 +81,13 @@ export default class extends Module {
 		// 「カタカナが多すぎる」
 		let kataCount = 0;
 		for (let i = 0; i < note.text.length; i++) {
-			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || (note.text.charCodeAt(i) >= 65382 && note.text.charCodeAt(i) <= 65439 && note.text.charCodeAt(i) != 65392)) {
+			if ((note.text.charCodeAt(i) >= 12449 && note.text.charCodeAt(i) <= 12538) || (note.text.charCodeAt(i) >= 65382 && note.text.charCodeAt(i) <= 65437 && note.text.charCodeAt(i) != 65392)) {
 				kataCount++;
 				if (kataCount >= 12) {
 					return react(':too_many_katakana:');
 				}
 			} else if ((note.text.charCodeAt(i) === 12539) || ((kataCount === 0) ? false : note.text.charCodeAt(i) === 12540)) { // "・", "ー"はノーカウント
+			} else if ((note.text.charCodeAt(i) === 65438) || (note.text.charCodeAt(i) === 65439)) { // "ﾞ", "ﾟ"はノーカウント（モーラ判定対応時に吹き飛ばすコード）
 			} else {
 				kataCount = 0;
 			}
