@@ -77,8 +77,6 @@ export default class extends Module {
 		if (includes(note.text, ['ふむ'])) return react('🐾');
 		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ', 'PDF'])) return react(':pdf:');
 		
-		
-		
 
 		if (await gomamayo.find(note.text)) return react(':gomamayo:');
 
