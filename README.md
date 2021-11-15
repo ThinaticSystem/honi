@@ -21,6 +21,7 @@ syuilo/aiフォークです。
 * :kanneiyahataseitetsusyo:
 * :moresou:
 * :yattare:
+* :pdf:
 
 ## インストール
 > Node.js と npm と MeCab (オプション) がインストールされている必要があります。
