@@ -74,7 +74,9 @@ export default class extends Module {
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
 		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 		if (includes(note.text, ['漏れそう','もれそう'])) return react(':yattare:');
-		if (includes(note.text, ['ふむ'])) return react(':paw_prints:');
+		if (includes(note.text, ['ふむ'])) return react('🐾');
+		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ', 'PDF'])) return react(':pdf:');
+		
 		
 		
 
