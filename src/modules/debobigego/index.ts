@@ -18,7 +18,7 @@ export default class extends Module {
 		//random number generator
 		//reffered https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 		function randomIntFromInterval(min, max) { // min and max included 
-			return Math.floor(Math.random() * (max - min + 1) + min)
+			return Math.floor(Math.random() * (max - min + 1) + min);
 		}
 
 		if (msg.text && msg.text.includes('デボビゲゴ')) {
@@ -26,7 +26,7 @@ export default class extends Module {
 			// long vowel: 12540
 			let i;
 			for(i=0; i<5; i++){
-				switch (Math.random()*4){
+				switch (Math.floor(Math.random()*4)){
 					case 1:
 						debo_msg += String.fromCharCode(randomIntFromInterval(12449, 12538));
 						break;
@@ -40,12 +40,16 @@ export default class extends Module {
 						debo_msg += "ー";
 						break;
 					default:
-						debo_msg += "";
 						break;
 				}
 
 			}
 			
+			//warranty for 0-chars
+			if(!debo_msg){
+				debo_msg=':deltu:';
+			}
+
 			msg.reply(debo_msg, {
 				immediate: true
 			});
