@@ -14,7 +14,7 @@ export default class extends Module {
 
 	@autobind
 	private async mentionHook(msg: Message) {
-		let debo_msg; //Honi says this
+		let debo_msg = ""; //Honi says this
 		//random number generator
 		//reffered https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 		function randomIntFromInterval(min, max) { // min and max included 
