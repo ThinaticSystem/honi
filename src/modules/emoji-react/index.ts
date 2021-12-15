@@ -39,12 +39,12 @@ export default class extends Module {
 		
 		if (await gomamayo.find(note.text)) return react(':gomamayo:');
 		if (includes(note.text, ['漏れそう','もれそう'])) return react(':yattare:');
+		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 		if (includes(note.text, ['ほに', 'honi'])) return react(':honi:');
 		if (includes(note.text, ['藍'])) return react('🙌');
 		if (includes(note.text, ['ふむ'])) return react('🐾');
 		if (includes(note.text, ['寿司', 'sushi']) || note.text === 'すし') return react('🍣');
 		if (includes(note.text, ['ぷりん'])) return react('🍮');
-		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 		if (includes(note.text, ['ぴざ'])) return react('🍕');
 		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ', 'PDF'])) return react(':pdf:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
