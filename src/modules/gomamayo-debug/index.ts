@@ -16,7 +16,8 @@ export default class extends Module {
 	@autobind
 	private async mentionHook(msg: Message) {
 		if (msg.text && msg.text.includes('ゴママヨ')) {
-			const gomamayoResult = await gomamayo.find(msg.text.replace(/ゴママヨ/g, ''));
+			const notetext = msg.renotetext != null ? msg.renotetext : msg.text;
+			const gomamayoResult = await gomamayo.find(notetext.replace(/ゴママヨ/g, ''));
 			let resBodyText, resCwText;
 			if (gomamayoResult) {
 				resCwText = 'ゴママヨかも';
@@ -24,7 +25,6 @@ export default class extends Module {
 			} else {
 				resBodyText = 'ゴママヨじゃないかも';
 			}
-			const resText = gomamayoResult ? `ゴママヨかも\n${JSON.stringify(gomamayoResult, undefined, 2)}` : 'ゴママヨじゃないかも';
 			msg.reply(resBodyText, {
 				immediate: true,
 				cw: resCwText
