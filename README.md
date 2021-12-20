@@ -9,6 +9,7 @@ Misskey用の日本語Botです。
 syuilo/aiフォークです。  
 無理のない改造がほんの少し加わえられています。
 ### 機能リスト
+* systemdのwatchdog用キープアライブping送信機能
 * ゴママヨ検知
 * 多すぎるカタカナ検知（「メイドデリバリーサービス」など）
 * 検索
@@ -24,7 +25,7 @@ syuilo/aiフォークです。
 * :pdf:
 
 ## インストール
-> Node.js と npm と MeCab (オプション) がインストールされている必要があります。
+> Node.js と npm と **libsystemd-dev** と MeCab (オプション) がインストールされている必要があります。
 
 まず適当なディレクトリに `git clone` します。
 次にそのディレクトリに `config.json` を作成します。中身は次のようにします:
@@ -43,6 +44,29 @@ syuilo/aiフォークです。
 }
 ```
 `npm install` して `npm run build` して `npm start` すれば起動できます
+
+### systemdを用いたサービス運用
+```
+[Unit]
+Description=Honi(Ai) daemon
+
+[Service]
+Type=simple
+User=honi
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/home/honi/honi
+TimeoutSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=honi
+Restart=always
+# WatchDog
+WatchdogSec=60
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
 
 ## フォント
 一部の機能にはフォントが必要です。藍にはフォントは同梱されていないので、ご自身でフォントをインストールディレクトリに`font.ttf`という名前で設置してください。
