@@ -30,6 +30,7 @@
 		"reconnecting-websocket": "4.4.0",
 		"request": "2.88.2",
 		"request-promise-native": "1.0.9",
+		"sd-notify": "2.8.0",
 		"seedrandom": "3.0.5",
 		"timeout-as-promise": "1.0.0",
 		"ts-node": "10.0.0",
