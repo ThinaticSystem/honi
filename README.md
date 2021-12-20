@@ -45,6 +45,29 @@ syuilo/aiフォークです。
 ```
 `npm install` して `npm run build` して `npm start` すれば起動できます
 
+### systemdを用いたサービス運用
+```
+[Unit]
+Description=Honi(Ai) daemon
+
+[Service]
+Type=simple
+User=honi
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/home/honi/honi
+TimeoutSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=honi
+Restart=always
+# WatchDog
+WatchdogSec=60
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## フォント
 一部の機能にはフォントが必要です。藍にはフォントは同梱されていないので、ご自身でフォントをインストールディレクトリに`font.ttf`という名前で設置してください。
 
