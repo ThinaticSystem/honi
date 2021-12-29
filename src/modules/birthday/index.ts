@@ -48,8 +48,8 @@ export default class extends Module {
 
 			const text = serifs.birthday.happyBirthday(friend.name);
 
-			this.ai.api('notes/create', {
-				text: `@${friend.userId} ${text}`
+			this.ai.sendMessage(friend.userId, {
+				text: text
 			});
 		});
 	}
