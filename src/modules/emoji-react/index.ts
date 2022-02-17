@@ -48,6 +48,7 @@ export default class extends Module {
 		if (includes(note.text, ['ぴざ'])) return react('🍕');
 		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ', 'PDF'])) return react(':pdf:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
+		if(note.text.match(/う[～|ー]*んこ/)) return react(':anataima_unkotte_iimashitane:');
 		
 		const customEmojis = note.text.match(/:([a-z0-9_+-]+):/gi);
 		if (customEmojis) {
