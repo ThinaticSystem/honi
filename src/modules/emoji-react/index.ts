@@ -6,6 +6,7 @@ import { Note } from '@/misskey/note';
 import Module from '@/module';
 import Stream from '@/stream';
 import includes from '@/utils/includes';
+import config from '@/config';
 const gomamayo = require('gomamayo-js');
 
 export default class extends Module {
@@ -37,7 +38,11 @@ export default class extends Module {
 			});
 		};
 		
-		if (await gomamayo.find(note.text)) return react(':gomamayo:');
+		let gomamayoSafe = note.text;
+		for (const ignore of config.gomamayoIgnoreWords) {
+			note.text.replace(ignore, '');
+		}
+		if (await gomamayo.find(gomamayoSafe)) return react(':gomamayo:');
 		if (includes(note.text, ['漏れそう','もれそう'])) return react(':yattare:');
 		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 		if (includes(note.text, ['ほに', 'honi'])) return react(':honi:');
