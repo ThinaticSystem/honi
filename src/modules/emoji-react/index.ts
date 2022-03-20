@@ -39,7 +39,7 @@ export default class extends Module {
 		};
 		
 		let gomamayoSafe = note.text;
-		for (const ignore of config.gomamayoIgnoreWords) {
+		for (const ignore of config.gomamayoIgnoreWords ? config.gomamayoIgnoreWords : []) {
 			note.text.replace(ignore, '');
 		}
 		if (await gomamayo.find(gomamayoSafe)) return react(':gomamayo:');
