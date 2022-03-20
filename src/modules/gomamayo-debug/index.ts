@@ -1,6 +1,7 @@
 import autobind from 'autobind-decorator';
 import Module from '@/module';
 import Message from '@/message';
+import config from '@/config';
 const gomamayo = require('gomamayo-js');
 
 export default class extends Module {
@@ -17,7 +18,13 @@ export default class extends Module {
 	private async mentionHook(msg: Message) {
 		if (msg.text && msg.text.includes('ゴママヨ')) {
 			const notetext = msg.renotetext != null ? msg.renotetext : msg.text;
-			const gomamayoResult = await gomamayo.find(notetext.replace(/ゴママヨ/g, ''));
+
+			let gomamayoSafe = notetext.replace(/ゴママヨ/g, '');
+			for (const ignore of config.gomamayoIgnoreWords ? config.gomamayoIgnoreWords : []) {
+				gomamayoSafe = gomamayoSafe.replace(ignore, '');
+			}
+
+			const gomamayoResult = await gomamayo.find(gomamayoSafe);
 			let resBodyText, resCwText;
 			if (gomamayoResult) {
 				resCwText = 'ゴママヨかも';

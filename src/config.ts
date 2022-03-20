@@ -12,6 +12,7 @@ type Config = {
 	mecab?: string;
 	mecabDic?: string;
 	memoryDir?: string;
+	gomamayoIgnoreWords?: string[];
 };
 
 const config = require('../config.json');
