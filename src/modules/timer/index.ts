@@ -41,7 +41,11 @@ export default class extends Module {
 			return true;
 		}
 
-		msg.reply(serifs.timer.set);
+		if (time === 2100000) {
+			msg.reply(serifs.timer.setZerozaki);
+		} else {
+			msg.reply(serifs.timer.set);
+		}
 
 		const str = `${hours ? hoursQuery![0] : ''}${minutes ? minutesQuery![0] : ''}${seconds ? secondsQuery![0] : ''}`;
 

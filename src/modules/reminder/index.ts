@@ -37,9 +37,9 @@ export default class extends Module {
 	@autobind
 	private async mentionHook(msg: Message) {
 		let text = msg.extractedText.toLowerCase();
-		if (!text.startsWith('remind') && !text.startsWith('todo')) return false;
+		if (!text.startsWith('remind') && !text.startsWith('todo') && !text.startsWith('リマインド')) return false;
 
-		if (text.startsWith('reminds') || text.startsWith('todos')) {
+		if (text.startsWith('reminds') || text.startsWith('todos') || text.startsWith('やること')) {
 			const reminds = this.reminds.find({
 				userId: msg.userId,
 			});

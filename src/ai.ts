@@ -15,6 +15,7 @@ import Friend, { FriendDoc } from '@/friend';
 import { User } from '@/misskey/user';
 import Stream from '@/stream';
 import log from '@/utils/log';
+const sdNotify = require('sd-notify');
 const pkg = require('../package.json');
 
 type MentionHook = (msg: Message) => Promise<boolean | HandlerResult>;
@@ -200,6 +201,15 @@ export default class 藍 {
 		setInterval(this.crawleTimer, 1000);
 
 		setInterval(this.logWaking, 10000);
+
+		// watchdogのキープアライブping
+		sdNotify.ready();
+
+		const watchdogInterval = sdNotify.watchdogInterval();
+		if (watchdogInterval > 0) {
+			const interval = Math.floor(watchdogInterval / 2);
+			sdNotify.startWatchdogMode(interval);
+		}
 
 		this.log(chalk.green.bold('Ai am now running!'));
 	}

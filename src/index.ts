@@ -34,6 +34,8 @@ import SleepReportModule from './modules/sleep-report';
 import NotingModule from './modules/noting';
 import PollModule from './modules/poll';
 import ReminderModule from './modules/reminder';
+import GomamayoDebugModule from './modules/gomamayo-debug';
+import DebobigegoModule from './modules/debobigego';
 
 console.log('   __    ____  _____  ___ ');
 console.log('  /__\\  (_  _)(  _  )/ __)');
@@ -88,6 +90,8 @@ promiseRetry(retry => {
 		new NotingModule(),
 		new PollModule(),
 		new ReminderModule(),
+		new GomamayoDebugModule(),
+		new DebobigegoModule()
 	]);
 }).catch(e => {
 	log(chalk.red('Failed to fetch the account'));

@@ -4,8 +4,28 @@
 ## これなに
 Misskey用の日本語Botです。
 
+## これほに
+### 概要
+syuilo/aiフォークです。  
+無理のない改造がほんの少し加わえられています。
+### 機能リスト
+* systemdのwatchdog用キープアライブping送信機能
+* ゴママヨ検知
+* 多すぎるカタカナ検知（「メイドデリバリーサービス」など）
+* 検索
+* じゃんけんに敗北
+* 語彙の改変
+### 依存カスタム絵文字
+* :honi:
+* :gomamayo:
+* :too_many_katakana:
+* :kanneiyahataseitetsusyo:
+* :moresou:
+* :yattare:
+* :pdf:
+
 ## インストール
-> Node.js と npm と MeCab (オプション) がインストールされている必要があります。
+> Node.js と npm と **libsystemd-dev** と MeCab (オプション) がインストールされている必要があります。
 
 まず適当なディレクトリに `git clone` します。
 次にそのディレクトリに `config.json` を作成します。中身は次のようにします:
@@ -26,6 +46,28 @@ Misskey用の日本語Botです。
 ```
 `npm install` して `npm run build` して `npm start` すれば起動できます
 
+### systemdを用いたサービス運用
+```
+[Unit]
+Description=Honi(Ai) daemon
+
+[Service]
+Type=simple
+User=honi
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/home/honi/honi
+TimeoutSec=60
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=honi
+Restart=always
+# WatchDog
+WatchdogSec=60
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
+```
 ## Dockerで動かす
 まず適当なディレクトリに `git clone` します。
 次にそのディレクトリに `config.json` を作成します。中身は次のようにします:
