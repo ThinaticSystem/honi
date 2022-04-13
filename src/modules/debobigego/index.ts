@@ -29,7 +29,7 @@ export default class extends Module {
 			// 0文字目（長音が先に来るのは流石におかしいので）
 			debo_msg += String.fromCharCode(randomIntFromInterval(12449, 12538));
 			// 1-4文字目
-			for(let i=1; i<5; i++) {
+			for(let c=1; c<5; c++) {
 				switch (Math.floor(Math.random() * (12538 - 12449 + 1))) {
 					case 0:
 						debo_msg += "ー";
