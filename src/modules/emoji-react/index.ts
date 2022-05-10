@@ -55,7 +55,7 @@ export default class extends Module {
 		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ'])) return react(':pdf:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
 
-		if (includes(note.text, ['うんこ', 'ぅんこ'])) {
+		if (includes(note.text, ['うんこ', 'ぅんこ', '宀んこ'])) {
 			if (!includes(note.text, ['おうんこ'])) { // 「おうんこ」は丁寧語なので除外
 				return react(':anataima_unkotte_iimashitane:');
 			}
@@ -72,6 +72,7 @@ export default class extends Module {
 								'ぷ',
 								'ぅ',
 								'𛄟'/*わ行う*/, '𛄢'/*ワ行ウ*/,
+								'宀'/*ウ冠*/,
 							].includes(roundedText[match.index - 1])
 						||
 							// 'う゚' (サロゲートペア)
