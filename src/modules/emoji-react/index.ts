@@ -7,6 +7,7 @@ import Module from '@/module';
 import Stream from '@/stream';
 import includes from '@/utils/includes';
 import config from '@/config';
+import {hankakuToZenkaku, katakanaToHiragana} from "@/utils/japanese";
 const gomamayo = require('gomamayo-js');
 
 export default class extends Module {
@@ -51,10 +52,37 @@ export default class extends Module {
 		if (includes(note.text, ['寿司', 'sushi']) || note.text === 'すし') return react('🍣');
 		if (includes(note.text, ['ぷりん'])) return react('🍮');
 		if (includes(note.text, ['ぴざ'])) return react('🍕');
-		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ', 'PDF'])) return react(':pdf:');
+		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ'])) return react(':pdf:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
-		if (note.text.match(/(?<!お)う[～|ー]*んこ/)) return react(':anataima_unkotte_iimashitane:');
-		
+
+		if (includes(note.text, ['うんこ', 'ぅんこ'])) {
+			if (!includes(note.text, ['おうんこ'])) { // 「おうんこ」は丁寧語なので除外
+				return react(':anataima_unkotte_iimashitane:');
+			}
+		}
+		if (includes(note.text, ['ーんこ', '～んこ'])) {
+			const roundedText = katakanaToHiragana(hankakuToZenkaku(note.text));
+			const match = /[ー|～]*んこ/.exec(roundedText); // indexがほしいのでmatch()ではなくexec()
+			if (match) {
+				if (match.index >= 1) {
+					if (
+							[
+								'う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る',
+								'ゔ', 'ぐ',　'ず', 'づ', 'ぶ',
+								'ぷ',
+								'ぅ',
+								'𛄟'/*わ行う*/, '𛄢'/*ワ行ウ*/,
+							].includes(roundedText[match.index - 1])
+						||
+							// 'う゚' (サロゲートペア)
+							(match.index >= 2 && roundedText[match.index - 1] === '゚' && roundedText[match.index - 2] === 'う')
+					) {
+						return react(':anataima_unkotte_iimashitane:');
+					}
+				}
+			}
+		}
+
 		const customEmojis = note.text.match(/:([a-z0-9_+-]+):/gi);
 		if (customEmojis) {
 			// カスタム絵文字が複数種類ある場合はキャンセル
