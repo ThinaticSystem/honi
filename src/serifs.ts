@@ -345,7 +345,9 @@ export default {
 	reminder: {
 		invalid: 'ん、ん～？？？',
 
-		reminds: 'やることリストね',
+		doneFromInvalidUser: 'イタズラはめっ！だよ…',
+
+		reminds: 'やることリスト🐥ね',
 
 		notify: (name) => name ? `${name}、これやった？` : `これやった？`,
 
