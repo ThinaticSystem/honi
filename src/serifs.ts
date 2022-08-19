@@ -347,7 +347,7 @@ export default {
 
 		doneFromInvalidUser: 'イタズラはめっ！だよ…',
 
-		reminds: 'やることリスト🐥ね',
+		reminds: 'やることリスト🐥🐿ね',
 
 		notify: (name) => name ? `${name}、これやった？` : `これやった？`,
 
