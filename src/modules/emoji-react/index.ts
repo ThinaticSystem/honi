@@ -83,6 +83,7 @@ export default class extends Module {
 				}
 			}
 		}
+		if (note.text === 'こう') return react('✋');
 
 		const customEmojis = note.text.match(/:([a-z0-9_+-]+):/gi);
 		if (customEmojis) {
