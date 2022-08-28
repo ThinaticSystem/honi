@@ -102,9 +102,10 @@ export default class extends Module {
 		if (foundHisomi === null) {
 			return;
 		}
-		const hisomiWord = noteTokens.filter((_v, i) => foundHisomi?.noteTokenIndexes.includes(i)).flatMap(token => token[9]).join('');
+
+		const hisomingText = noteTokens.filter((_v, i) => foundHisomi?.noteTokenIndexes.includes(i)).flatMap(token => token[9]).join('');
 		this.ai.post({
-			text: `${hisomiWord}に潜む、${foundHisomi.word}`
+			text: `${hisomingText}に潜む、${foundHisomi.word}`
 		});
 	}
 }
