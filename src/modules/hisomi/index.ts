@@ -47,6 +47,7 @@ export default class extends Module {
 			}
 			| null
 			= null;
+
 		this.learnedKeywordsTokens.forEach(learnedKeywordTokens => {
 			// 既に潜みを見つけていたら中断
 			if (foundHisomi !== null) {
@@ -61,7 +62,7 @@ export default class extends Module {
 				return;
 			}
 			// トークンをまたいで潜んでいない場合抜ける
-			if (!noteTokens.find(token => token[9] === hisomiWordRuby)) {
+			if (noteTokens.find(token => token[9] === hisomiWordRuby)) {
 				return;
 			}
 
