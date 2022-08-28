@@ -64,7 +64,7 @@ export default class extends Module {
 				return;
 			}
 			// トークンをまたいで潜んでいない場合抜ける
-			if (noteTokens.find(token => token[9].includes(hisomiWordRuby))) {
+			if (noteTokens.find(token => token[9]?.includes(hisomiWordRuby))) {
 				return;
 			}
 
@@ -81,7 +81,7 @@ export default class extends Module {
 
 				// 1文字づつ減らして部分マッチを試行
 				for (let len = consumableHisomiWordRuby.length; len > 0; len--) {
-					if (noteToken[9].includes(consumableHisomiWordRuby.slice(0, len))) {
+					if (noteToken[9]?.includes(consumableHisomiWordRuby.slice(0, len))) {
 						// 部分マッチに成功した部分を消費
 						consumableHisomiWordRuby = consumableHisomiWordRuby.slice(len);
 
