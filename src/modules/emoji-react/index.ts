@@ -55,6 +55,24 @@ export default class extends Module {
 		if (includes(note.text, ['pdf', 'ＰＤＦ', 'ｐｄｆ'])) return react(':pdf:');
 		if (includes(note.text, ['どこ'])) return react(':kanneiyahataseitetsusyo:');
 
+		//// DLsite検知
+		{
+			const text = note.text; // note.textがなぜかArray.prototype.someの中でnullかもになる
+
+			// Plain
+			if (['RJ', 'VJ', 'BJ', 'RE'].some(v => text.includes(v))) {
+				if (/RJ|VJ|BJ|RE)\d{6}/.test(text)) {
+					return react(':dlsite:');
+				}
+			}
+			// Base64
+			if (text.includes('Uko')) {
+				if (/Uko[0-9a-zA-Z+\/]{8}=/.test(text)) {
+					return react(':dlsite:');
+				}
+			}
+		}
+
 		if (includes(note.text, ['うんこ', 'ぅんこ', '宀んこ'])) {
 			if (!includes(note.text, ['おうんこ'])) { // 「おうんこ」は丁寧語なので除外
 				return react(':anataima_unkotte_iimashitane:');
