@@ -23,6 +23,7 @@ syuilo/aiフォークです。
 * :moresou:
 * :yattare:
 * :pdf:
+* :dlsite:
 
 ## インストール
 > Node.js と npm と **libsystemd-dev** と MeCab (オプション) がインストールされている必要があります。
