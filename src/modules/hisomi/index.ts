@@ -3,7 +3,6 @@ import autobind from 'autobind-decorator';
 import { Note } from '@/misskey/note';
 import Module from '@/module';
 import Stream from '@/stream';
-import * as loki from 'lokijs';
 import config from '@/config';
 import { mecab } from '../keyword/mecab';
 
@@ -62,7 +61,7 @@ export default class extends Module {
 				continue;
 			}
 			// トークンをまたいで潜んでいない場合抜ける
-			if (noteTokens.find(token => token[9] === hisomiWordRuby)) {
+			if (noteTokens.find(token => token[9].includes(hisomiWordRuby))) {
 				continue;
 			}
 
