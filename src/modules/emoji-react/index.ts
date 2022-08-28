@@ -68,7 +68,7 @@ export default class extends Module {
 
 			// Plain
 			if (['RJ', 'VJ', 'BJ', 'RE'].some(v => text.includes(v))) {
-				if (/RJ|VJ|BJ|RE)\d{6}/.test(text)) {
+				if (/(RJ|VJ|BJ|RE)\d{6}/.test(text)) {
 					return react(':dlsite:');
 				}
 			}
