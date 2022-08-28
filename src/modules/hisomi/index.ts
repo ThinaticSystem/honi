@@ -54,7 +54,6 @@ export default class extends Module {
 			}
 
 			// 1単語でも2つ以上のトークンに解釈されている可能性があるため結合する
-			const hisomiWord = learnedKeywordTokens.flatMap(token => token[0]).join('');
 			const hisomiWordRuby = learnedKeywordTokens.flatMap(token => token[9]).join('');
 
 			// 含まれない場合抜ける
@@ -71,12 +70,18 @@ export default class extends Module {
 			let consumableHisomiWordRuby = hisomiWordRuby;
 			// 潜みを構成するnoteTokensのトークンインデックスをメモする配列
 			const noteTokenHisomingTokenIndexes: number[] = [];
+
 			noteTokens.forEach((noteToken, noteTokenIndex) => {
 				// 既に潜みトークンの完全マッチが終わっていればスキップ
 				if (consumableHisomiWordRuby.length === 0) {
+					foundHisomi = {
+						word: learnedKeywordTokens.flatMap(token => token[0]).join(''),
+						noteTokenIndexes: noteTokenHisomingTokenIndexes,
+					};
 					return;
 				}
 
+				// 1文字づつ減らして部分マッチを試行
 				for (let len = consumableHisomiWordRuby.length; len > 0; len--) {
 					if (noteToken[9].includes(consumableHisomiWordRuby.slice(0, len))) {
 						// 部分マッチに成功した部分を消費
@@ -91,19 +96,14 @@ export default class extends Module {
 				// 部分マッチ失敗なので潜みトークンインデックスをリセット
 				noteTokenHisomingTokenIndexes.splice(0);
 			});
-			if (consumableHisomiWordRuby.length === 0) {
-				foundHisomi = {
-					word: learnedKeywordTokens.flatMap(token => token[0]).join(''),
-					noteTokenIndexes: noteTokenHisomingTokenIndexes,
-				};
-			}
 		});
 
-		if (foundHisomi) {
-			const hisomiWord = noteTokens.filter((_v, i) => foundHisomi?.noteTokenIndexes.includes(i)).flatMap(token => token[9]).join('');
-			this.ai.post({
-				text: `${hisomiWord}に潜む、${foundHisomi.word}`
-			});
+		if (foundHisomi === null) {
+			return;
 		}
+		const hisomiWord = noteTokens.filter((_v, i) => foundHisomi?.noteTokenIndexes.includes(i)).flatMap(token => token[9]).join('');
+		this.ai.post({
+			text: `${hisomiWord}に潜む、${foundHisomi.word}`
+		});
 	}
 }
