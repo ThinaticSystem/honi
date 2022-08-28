@@ -52,10 +52,11 @@ export default class extends Module {
 		for (const learnedKeywordTokens of this.learnedKeywordsTokens) {
 			// 1単語でも2つ以上のトークンに解釈されている可能性があるため結合する
 			const hisomiWordRuby = learnedKeywordTokens.flatMap(token => token[9]).join('');
+
+			// 2文字潜みはダサいので抜ける
 			if (hisomiWordRuby.length < 3) {
 				return;
 			}
-
 			// 含まれない場合抜ける
 			if (!noteRuby.includes(hisomiWordRuby)) {
 				continue;
@@ -100,7 +101,7 @@ export default class extends Module {
 				// 部分マッチ失敗なので潜みトークンインデックスをリセット
 				noteTokenHisomingTokenIndexes.splice(0);
 			};
-		};
+		}
 
 		if (!foundHisomi) {
 			return;
