@@ -48,22 +48,19 @@ export default class extends Module {
 			| null
 			= null;
 
-		this.learnedKeywordsTokens.forEach(learnedKeywordTokens => {
-			// 既に潜みを見つけていたら中断
-			if (foundHisomi) {
-				return;
-			}
-
+		// forEachにすると型推論がばかになっちゃう💕
+		learnedKeywordsLoop:
+		for (const learnedKeywordTokens of this.learnedKeywordsTokens) {
 			// 1単語でも2つ以上のトークンに解釈されている可能性があるため結合する
 			const hisomiWordRuby = learnedKeywordTokens.flatMap(token => token[9]).join('');
 
 			// 含まれない場合抜ける
 			if (!noteRuby.includes(hisomiWordRuby)) {
-				return;
+				continue;
 			}
 			// トークンをまたいで潜んでいない場合抜ける
 			if (noteTokens.find(token => token[9] === hisomiWordRuby)) {
-				return;
+				continue;
 			}
 
 			//// 潜みの検出
@@ -72,14 +69,18 @@ export default class extends Module {
 			// 潜みを構成するnoteTokensのトークンインデックスをメモする配列
 			const noteTokenHisomingTokenIndexes: number[] = [];
 
-			noteTokens.forEach((noteToken, noteTokenIndex) => {
+			// forEachにすると型推論がばかになっちゃう💕
+			noteTokensLoop:
+			for (let noteTokenIndex = 0; noteTokenIndex < noteTokens.length; noteTokenIndex++) {
+				const noteToken = noteTokens[noteTokenIndex];
+
 				// 既に潜みトークンの完全マッチが終わっていればスキップ
 				if (consumableHisomiWordRuby.length === 0) {
 					foundHisomi = {
 						word: learnedKeywordTokens.flatMap(token => token[0]).join(''),
 						noteTokenIndexes: noteTokenHisomingTokenIndexes,
 					};
-					return;
+					break learnedKeywordsLoop;
 				}
 
 				// 1文字づつ減らして部分マッチを試行
@@ -89,15 +90,15 @@ export default class extends Module {
 						consumableHisomiWordRuby = consumableHisomiWordRuby.slice(len);
 
 						noteTokenHisomingTokenIndexes.push(noteTokenIndex);
-						return;
+						continue noteTokensLoop;
 					}
 				}
 				// 部分マッチ失敗なので消費をリセット
 				consumableHisomiWordRuby = hisomiWordRuby;
 				// 部分マッチ失敗なので潜みトークンインデックスをリセット
 				noteTokenHisomingTokenIndexes.splice(0);
-			});
-		});
+			};
+		};
 
 		if (!foundHisomi) {
 			return;
