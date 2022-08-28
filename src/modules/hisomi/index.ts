@@ -44,12 +44,14 @@ export default class extends Module {
 				word: string,
 				noteTokenIndexes: number[],
 			}
-			| null
-			= null;
+			| undefined;
 
-		// forEachにすると型推論がばかになっちゃう💕
-		learnedKeywordsLoop:
-		for (const learnedKeywordTokens of this.learnedKeywordsTokens) {
+		let isCompleted = false;
+		this.learnedKeywordsTokens.forEach(learnedKeywordTokens => {
+			if (isCompleted) {
+				return;
+			}
+
 			// 1単語でも2つ以上のトークンに解釈されている可能性があるため結合する
 			const hisomiWordRuby = learnedKeywordTokens.flatMap(token => token[9]).join('');
 
@@ -59,11 +61,11 @@ export default class extends Module {
 			}
 			// 含まれない場合抜ける
 			if (!noteRuby.includes(hisomiWordRuby)) {
-				continue;
+				return;
 			}
 			// トークンをまたいで潜んでいない場合抜ける
 			if (noteTokens.find(token => token[9].includes(hisomiWordRuby))) {
-				continue;
+				return;
 			}
 
 			//// 潜みの検出
@@ -72,18 +74,9 @@ export default class extends Module {
 			// 潜みを構成するnoteTokensのトークンインデックスをメモする配列
 			const noteTokenHisomingTokenIndexes: number[] = [];
 
-			// forEachにすると型推論がばかになっちゃう💕
-			noteTokensLoop:
-			for (let noteTokenIndex = 0; noteTokenIndex < noteTokens.length; noteTokenIndex++) {
-				const noteToken = noteTokens[noteTokenIndex];
-
-				// 既に潜みトークンの完全マッチが終わっていればスキップ
-				if (consumableHisomiWordRuby.length === 0) {
-					foundHisomi = {
-						word: learnedKeywordTokens.flatMap(token => token[0]).join(''),
-						noteTokenIndexes: noteTokenHisomingTokenIndexes,
-					};
-					break learnedKeywordsLoop;
+			noteTokens.forEach((noteToken, noteTokenIndex) => {
+				if (isCompleted) {
+					return;
 				}
 
 				// 1文字づつ減らして部分マッチを試行
@@ -93,15 +86,25 @@ export default class extends Module {
 						consumableHisomiWordRuby = consumableHisomiWordRuby.slice(len);
 
 						noteTokenHisomingTokenIndexes.push(noteTokenIndex);
-						continue noteTokensLoop;
+
+						// 既に潜みトークンの完全マッチが終わっていれば最終処理
+						if (consumableHisomiWordRuby.length === 0) {
+							foundHisomi = {
+								word: learnedKeywordTokens.flatMap(token => token[0]).join(''),
+								noteTokenIndexes: noteTokenHisomingTokenIndexes,
+							};
+							isCompleted = true;
+						}
+
+						return;
 					}
 				}
 				// 部分マッチ失敗なので消費をリセット
 				consumableHisomiWordRuby = hisomiWordRuby;
 				// 部分マッチ失敗なので潜みトークンインデックスをリセット
 				noteTokenHisomingTokenIndexes.splice(0);
-			};
-		}
+			});
+		});
 
 		if (!foundHisomi) {
 			return;
