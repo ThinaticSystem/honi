@@ -99,6 +99,7 @@ export default class extends Module {
 						return;
 					}
 				}
+
 				// 部分マッチ失敗なので消費をリセット
 				consumableHisomiWordRuby = hisomiWordRuby;
 				// 部分マッチ失敗なので潜みトークンインデックスをリセット
