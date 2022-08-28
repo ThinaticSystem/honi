@@ -25,7 +25,7 @@ export default class extends Module {
 			indices: ['userId'],
 		});
 		// 覚えてる単語の読みを生成
-		learnedKeywords.data.forEach(learnedKeyword => {
+		learnedKeywords.data.forEach(async (learnedKeyword) => {
 			this.learnedKeywordsTokens.push((await mecab(learnedKeyword.keyword, config.mecab, config.mecabDic)));
 		});
 
