@@ -35,6 +35,7 @@ export default class extends Module {
 	private async onNote(note: Note) {
 		if (note.reply != null) return;
 		if (note.text == null) return;
+		if (note.text.includes('潜む')) return;
 
 		const noteTokens = await mecab(note.text, config.mecab, config.mecabDic);
 		const noteRuby = noteTokens.flatMap(token => token[9]).join('');
@@ -113,7 +114,7 @@ export default class extends Module {
 
 		const hisomingText = noteTokens.filter((_v, i) => foundHisomi?.noteTokenIndexes.includes(i)).flatMap(token => token[0]).join('');
 		this.ai.post({
-			text: `${hisomingText}に潜む、${foundHisomi.word}`
+			text: `${hisomingText}に潜む、${foundHisomi.word}`,
 		});
 	}
 }
