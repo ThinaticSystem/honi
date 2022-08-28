@@ -50,7 +50,7 @@ export default class extends Module {
 
 		this.learnedKeywordsTokens.forEach(learnedKeywordTokens => {
 			// 既に潜みを見つけていたら中断
-			if (foundHisomi !== null) {
+			if (foundHisomi) {
 				return;
 			}
 
@@ -99,7 +99,7 @@ export default class extends Module {
 			});
 		});
 
-		if (foundHisomi === null) {
+		if (!foundHisomi) {
 			return;
 		}
 
