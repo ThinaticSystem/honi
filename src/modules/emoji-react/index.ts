@@ -39,11 +39,18 @@ export default class extends Module {
 			});
 		};
 		
-		let gomamayoSafe = note.text;
-		for (const ignore of config.gomamayoIgnoreWords ? config.gomamayoIgnoreWords : []) {
-			gomamayoSafe = gomamayoSafe.replace(ignore, '');
-		}
-		if (await gomamayo.find(gomamayoSafe)) return react(':gomamayo:');
+		//// ゴママヨ
+		// 無視リストの取り除き
+		const gomamayoReadyText = (() => {
+			const processingText = note.text;
+			config.gomamayoIgnoreWords?.every(ignore => {
+				processingText.replace(ignore, ' '); // 取り除き後の形態素解析を助けるためスペースを挿入
+			});
+			return processingText;
+		})();
+		// ゴママヨ解析
+		if (await gomamayo.find(gomamayoReadyText)) return react(':gomamayo:');
+
 		if (includes(note.text, ['漏れそう','もれそう'])) return react(':yattare:');
 		if (includes(note.text, ['サイゼリア'])) return react(':police_saizeriya:');
 		if (includes(note.text, ['ほに', 'honi'])) return react(':honi:');
