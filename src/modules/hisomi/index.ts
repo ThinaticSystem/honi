@@ -45,7 +45,8 @@ export default class extends Module {
 				word: string,
 				noteTokenIndexes: number[],
 			}
-			| undefined;
+			| null
+			= null;
 
 		learnedKeywordsLoop:
 		for (const learnedKeywordTokens of this.learnedKeywordsTokens) {
