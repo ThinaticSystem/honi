@@ -47,7 +47,6 @@ export default class extends Module {
 			}
 			| undefined;
 
-		let isCompleted = false;
 		learnedKeywordsLoop:
 		for (const learnedKeywordTokens of this.learnedKeywordsTokens) {
 			// 1単語でも2つ以上のトークンに解釈されている可能性があるため結合する
