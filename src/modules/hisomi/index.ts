@@ -82,7 +82,14 @@ export default class extends Module {
 
 				// 1文字づつ減らして部分マッチを試行
 				for (let len = consumableHisomiWordRuby.length; len > 0; len--) {
-					if (noteToken[9]?.includes(consumableHisomiWordRuby.slice(0, len))) {
+					const target = (() => {
+						// トークンの頭から潜む場合はマッチさせない
+						if (len === consumableHisomiWordRuby.length) {
+							return noteToken[9].slice(1);
+						}
+						return noteToken[9];
+					})();
+					if (target?.includes(consumableHisomiWordRuby.slice(0, len))) {
 						// 部分マッチに成功した部分を消費
 						consumableHisomiWordRuby = consumableHisomiWordRuby.slice(len);
 
