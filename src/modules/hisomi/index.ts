@@ -73,6 +73,7 @@ export default class extends Module {
 			const noteTokenHisomingTokenIndexes: number[] = [];
 
 			let noteTokenIndex = -1;
+			noteTokensLoop:
 			for (const noteToken of noteTokens) {
 				noteTokenIndex++;
 
@@ -100,7 +101,7 @@ export default class extends Module {
 							break learnedKeywordsLoop;
 						}
 
-						continue;
+						continue noteTokensLoop;
 					}
 				}
 
