@@ -19,6 +19,7 @@ RUN if [ $enable_mecab -ne 0 ]; then apt-get update \
 COPY . /ai
 
 WORKDIR /ai
+RUN apt-get install -y build-essential libsystemd-dev
 RUN npm install && npm run build
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
