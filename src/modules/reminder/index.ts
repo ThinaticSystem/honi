@@ -64,7 +64,7 @@ export default class extends Module {
 
 			const getQuoteLink = id => `[${id}](${config.host}/notes/${id})`;
 
-			msg.reply(serifs.reminder.reminds + '\n' + reminds.map(remind => `・${remind.thing ? remind.thing : getQuoteLink(remind.quoteId)}`).join('\n'));
+			msg.reply(serifs.reminder.reminds + '\n' + reminds.map(remind => `・${remind.id}: ${remind.thing ? remind.thing : getQuoteLink(remind.quoteId)}`).join('\n'));
 			return true;
 		}
 
