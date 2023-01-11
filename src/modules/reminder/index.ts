@@ -42,7 +42,7 @@ export default class extends Module {
 		let text = msg.extractedText.toLowerCase();
 
 		const spaceParser = T.str(/[\s　]+/).option();
-		const idParser = T.str('(ID)');
+		const idParser = T.str(/\w/).many(10).map(chars => chars.join(''));
 		const yappayameParser = T.alt([
 			T.str('消して'),
 			T.str('けして'),
