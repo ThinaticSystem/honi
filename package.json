@@ -32,6 +32,7 @@
 		"request-promise-native": "1.0.9",
 		"sd-notify": "2.8.0",
 		"seedrandom": "3.0.5",
+		"terrario": "0.7.1",
 		"timeout-as-promise": "1.0.0",
 		"ts-node": "10.0.0",
 		"twemoji-parser": "13.1.0",
