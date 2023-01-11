@@ -9,10 +9,7 @@ import * as T from 'terrario';
 
 const NOTIFY_INTERVAL = 1000 * 60 * 60 * 12;
 
-export default class extends Module {
-	public readonly name = 'reminder';
-
-	private reminds: loki.Collection<{
+interface Remind {
 		userId: string;
 		id: string;
 		isDm: boolean;
@@ -20,7 +17,12 @@ export default class extends Module {
 		quoteId: string | null;
 		times: number; // 催促した回数(使うのか？)
 		createdAt: number;
-	}>;
+}
+
+export default class extends Module {
+	public readonly name = 'reminder';
+
+	private reminds: loki.Collection<Remind>;
 
 	@autobind
 	public install() {
@@ -123,7 +125,7 @@ export default class extends Module {
 	 * @param id remindのid!
 	 * @returns 成功: 消したやつ | 失敗: false
 	 */
-	private removeSpecificReminder(id: string): ReturnType<typeof this.reminds['findOne']> | false {
+	private removeSpecificReminder(id: string): Remind | false {
 		const remind = this.reminds.findOne({
 			id: id,
 		});
