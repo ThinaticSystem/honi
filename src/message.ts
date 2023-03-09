@@ -37,8 +37,8 @@ export default class Message {
 		return this.note.visibility;
 	}
 
-	public get renotetext():string | null{
-		return this.messageOrNote.renoteId!=null?this.messageOrNote.renote.text:null;
+	public get renotetext(): string | null{
+		return this.note.renoteId != null ? this.note.renote.text : null;
 	}
 
 	/**
