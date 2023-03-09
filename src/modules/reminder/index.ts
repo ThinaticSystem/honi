@@ -43,9 +43,12 @@ export default class extends Module {
 		const spaceParser = T.str(/[\s　]+/).option();
 		const idParser = T.str(/\w/).many(10).map(chars => chars.join(''));
 		const yappayameParser = T.alt([
-			T.str('消して'),
-			T.str('けして'),
-			T.str('やっぱやめ'),
+			T.str('やめ'),
+			T.str('消し'),
+			T.str('けし'),
+			T.str('忘れ'),
+			T.str('わすれ'),
+			T.str('わすれ'),
 		]);
 		const removeSpecificReminderParser = T.alt([
 			T.seq([
