@@ -5,13 +5,11 @@ import Message from '@/message';
 import serifs, { getSerif } from '@/serifs';
 import { acct } from '@/utils/acct';
 import config from '@/config';
+import * as T from 'terrario';
 
 const NOTIFY_INTERVAL = 1000 * 60 * 60 * 12;
 
-export default class extends Module {
-	public readonly name = 'reminder';
-
-	private reminds: loki.Collection<{
+interface Remind {
 		userId: string;
 		id: string;
 		isDm: boolean;
@@ -19,7 +17,12 @@ export default class extends Module {
 		quoteId: string | null;
 		times: number; // 催促した回数(使うのか？)
 		createdAt: number;
-	}>;
+}
+
+export default class extends Module {
+	public readonly name = 'reminder';
+
+	private reminds: loki.Collection<Remind>;
 
 	@autobind
 	public install() {
@@ -37,6 +40,39 @@ export default class extends Module {
 	@autobind
 	private async mentionHook(msg: Message) {
 		let text = msg.extractedText.toLowerCase();
+
+		const spaceParser = T.str(/[\s　]+/).option();
+		const idParser = T.str(/\w/).many(10).map(chars => chars.join(''));
+		const yappayameParser = T.alt([
+			T.str('消して'),
+			T.str('けして'),
+			T.str('やっぱやめ'),
+		]);
+		const removeSpecificReminderParser = T.alt([
+			T.seq([
+				yappayameParser,
+				spaceParser.option(),
+				idParser,
+			], 2),
+
+			T.seq([
+				idParser,
+				spaceParser.option(),
+				yappayameParser,
+			], 0),
+		]);
+		const removeSpecificReminderParseResult = removeSpecificReminderParser.parse(text);
+		if (removeSpecificReminderParseResult.success) {
+			const removeResult = this.removeSpecificReminder(removeSpecificReminderParseResult.value);
+			if (removeResult) {
+				msg.reply(`吹き飛ばしといたよ\nリマインド: ${removeResult.thing}`);
+			}
+			return {
+				reaction: '🗑',
+				immediate: true,
+			};
+		}
+
 		if (!text.startsWith('remind') && !text.startsWith('todo') && !text.startsWith('リマインド')) return false;
 
 		if (text.startsWith('reminds') || text.startsWith('todos') || text.startsWith('やること')) {
@@ -46,7 +82,7 @@ export default class extends Module {
 
 			const getQuoteLink = id => `[${id}](${config.host}/notes/${id})`;
 
-			msg.reply(serifs.reminder.reminds + '\n' + reminds.map(remind => `・${remind.thing ? remind.thing : getQuoteLink(remind.quoteId)}`).join('\n'));
+			msg.reply(serifs.reminder.reminds + '\n' + reminds.map(remind => `・${remind.id}: ${remind.thing ? remind.thing : getQuoteLink(remind.quoteId)}`).join('\n'));
 			return true;
 		}
 
@@ -99,6 +135,22 @@ export default class extends Module {
 			immediate: true,
 		};
 	}
+
+	/**
+	 * 指定されたIDのリマインドを消す
+	 * @param id remindのid!
+	 * @returns 成功: 消したやつ | 失敗: false
+	 */
+	private removeSpecificReminder(id: string): Remind | false {
+		const remind = this.reminds.findOne({
+			id: id,
+		});
+		if (remind == null) return false;
+
+		this.unsubscribeReply(remind.thing == null && remind.quoteId ? remind.quoteId : remind.id);
+		this.reminds.remove(remind);
+		return remind;
+	};
 
 	@autobind
 	private async contextHook(key: any, msg: Message, data: any) {
