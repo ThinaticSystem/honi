@@ -8,6 +8,9 @@ import config from '@/config';
 import * as T from 'terrario';
 
 const NOTIFY_INTERVAL = 1000 * 60 * 60 * 12;
+const NOTIFY_RETRY_JITTER_MAX = 1000 * 60 * 30; // 30分
+const genJitterMilliSec = () => Math.round(
+	NOTIFY_RETRY_JITTER_MAX* Math.random());
 
 interface Remind {
 		userId: string;
@@ -215,8 +218,8 @@ export default class extends Module {
 			id: remind.id
 		});
 
-		// タイマーセット
-		this.setTimeoutWithPersistence(NOTIFY_INTERVAL, {
+		// タイマーセットII
+		this.setTimeoutWithPersistence(NOTIFY_INTERVAL + genJitterMilliSec(), {
 			id: remind.id,
 		});
 	}
