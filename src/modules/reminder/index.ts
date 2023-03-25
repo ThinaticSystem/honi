@@ -48,7 +48,6 @@ export default class extends Module {
 			T.str('けし'),
 			T.str('忘れ'),
 			T.str('わすれ'),
-			T.str('わすれ'),
 		]);
 		const removeSpecificReminderParser = T.alt([
 			T.seq([
