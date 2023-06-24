@@ -97,6 +97,10 @@ WantedBy=multi-user.target
 ## 記憶
 藍は記憶の保持にインメモリデータベースを使用しており、藍のインストールディレクトリに `memory.json` という名前で永続化されます。
 
+## とらぶるしゅーｔぇいんぐ
+`npm i`時等にARM環境などでCanvasが入んないとき
+https://github.com/Automattic/node-canvas/issues/1447#issuecomment-1304690594
+
 ## ライセンス
 MIT
 
