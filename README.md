@@ -54,8 +54,12 @@ Description=Honi(Ai) daemon
 
 [Service]
 Type=simple
+# 実行ユーザーを指定
 User=honi
+# /usr/bin/npm部分はnだったら/usr/local/n/versions/node/18.16.1/binとかで雑に…
+# nvmだったら/home/{ユーザー}/.nvm/nvm-execにしてEnvironment="NODE_VERSION=v18.16.1"の行を追記
 ExecStart=/usr/bin/npm start
+# honiリポジトリのパスを指定
 WorkingDirectory=/home/honi/honi
 TimeoutSec=60
 StandardOutput=syslog
@@ -98,8 +102,8 @@ WantedBy=multi-user.target
 藍は記憶の保持にインメモリデータベースを使用しており、藍のインストールディレクトリに `memory.json` という名前で永続化されます。
 
 ## とらぶるしゅーｔぇいんぐ
-`npm i`時等にARM環境などでCanvasが入んないとき
-https://github.com/Automattic/node-canvas/issues/1447#issuecomment-1304690594
+- `npm i`時等にARM環境などでCanvasが入んないとき\
+  https://github.com/Automattic/node-canvas/issues/1447#issuecomment-1304690594
 
 ## ライセンス
 MIT
