@@ -43,14 +43,19 @@ export default class extends Module {
 	private async mentionHook(msg: Message) {
 		let text = msg.extractedText.toLowerCase();
 
-		const spaceParser = T.str(/[\s　]+/).option();
-		const idParser = T.str(/\w/).many(10).map(chars => chars.join(''));
+		const spaceParser = T.str(/[\s　]+/);
+		const idParser = T.str(/[a-z0-9]/).many(10).map(chars => chars.join(''));
 		const yappayameParser = T.alt([
 			T.str('やめ'),
 			T.str('消し'),
 			T.str('けし'),
 			T.str('忘れ'),
 			T.str('わすれ'),
+			T.str('やっぱやめ'),
+			T.str('なし'),
+			T.str('取り消し'),
+			T.str('とりけし'),
+			T.str('キャンセル'),
 		]);
 		const removeSpecificReminderParser = T.alt([
 			T.seq([
