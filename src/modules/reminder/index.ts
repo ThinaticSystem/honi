@@ -43,7 +43,7 @@ export default class extends Module {
 	private async mentionHook(msg: Message) {
 		let text = msg.extractedText.toLowerCase();
 
-		const spaceParser = T.str(/[\s　]+/).option();
+		const spaceParser = T.str(/[\s　]+/);
 		const idParser = T.str(/\w/).many(10).map(chars => chars.join(''));
 		const yappayameParser = T.alt([
 			T.str('やめ'),
