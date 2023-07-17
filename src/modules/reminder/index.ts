@@ -218,7 +218,7 @@ export default class extends Module {
 			id: remind.id
 		});
 
-		// タイマーセットII
+		// タイマーセット
 		this.setTimeoutWithPersistence(NOTIFY_INTERVAL + genJitterMilliSec(), {
 			id: remind.id,
 		});
